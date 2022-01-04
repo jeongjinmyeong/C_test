@@ -1,0 +1,59 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+int IsFind(int data[6], int index)
+{
+	int re, i;
+
+	re = 0; //찾을 수 없음
+	
+	for (i = 0; i < index; i++)
+	{
+		if (data[i] == data[index])
+		{
+			re = 1; //찾음
+			break;
+		}
+	}
+	
+	return re;
+} //초기화 후 중복되지 않게 하기 위한 함수
+
+void Data(int data[6])
+{
+	int i;
+
+	srand(time(NULL));
+
+	for (i = 0; i < 6; i++)
+	{
+		data[i] = rand() % 46 + 1;
+		if (1 == IsFind(data, i))
+		{
+			i--;
+		}
+	}
+}
+
+void Show(int data[6])
+{
+	int i;
+
+	for (i = 0; i < 6; i++)
+	{
+		printf("%d\t", data[i]);
+	}
+	printf("\n");
+} //출력
+
+int main()
+{
+	int i, data[6];
+	
+	Data(data);
+
+	Show(data);
+
+	return 0;
+}
