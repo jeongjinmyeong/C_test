@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#include<time.h>
+
+void lni(int kor[10], int eng[10], int math[10])
+{
+	int i;
+	
+	srand(time(NULL));
+
+	for (i = 0; i < 10; i++)
+	{
+		kor[i] = rand() % 101;
+		eng[i] = rand() % 101;
+		math[i] = rand() % 101;
+	}
+} //초기화 및 각 과목에 임의의 점수를 받는 함수
+
+void MakeTotalAvr(int kor[10], int eng[10], int math[10], int total[10], float avr[10])
+{
+	int i;
+
+	for (i = 0; i < 10; i++)
+	{
+		total[i] = kor[i] + eng[i] + math[i];
+		avr[i] = total[i] / 3.0;
+	}
+} // 합계와 평균
+
+void MakeMaxIndex(int total[10], int* maxindex)
+{
+	int i;
+
+	*maxindex = 0; //maxindex가 가리키는 곳으로 0값을 넣어라
+
+	for (i = 0; i < 10; i++)
+	{
+		if (total[*maxindex] < total[i])
+		{
+			*maxindex = i; //maxindex가 가리키는 곳으로 i값을 넣어라
+		}
+	
+	}
+} // 1등 산출
+
+void MyPrint(int kor[10], int eng[10], int math[10], int total[10], float avr[10], int maxindex)
+{
+	int i;
+
+	printf("* 국\t 영\t 수\t 총합\t 평균\n");
+
+	for (i = 0; i < 10; i++)
+	{
+		printf("%d] %d\t %d\t %d\t %d\t %.2f\n", i, kor[i], eng[i], math[i], total[i], avr[i]);
+	}
+	printf("max index : %d\n", maxindex);
+}
+
+
+int main()
+{
+	int maxindex;
+
+	int kor[10], eng[10], math[10], total[10];
+	float avr[10];
+
+	lni(kor, eng, math);
+
+	MakeTotalAvr(kor, eng, math, total, avr);
+	
+	MakeMaxIndex(total, &maxindex);
+
+	MyPrint(kor,eng,math,total,avr, maxindex);
+
+	return 0;
+}
