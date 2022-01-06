@@ -1,0 +1,25 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+void Input(int* a, int* b)
+{
+	printf("input 2 num : ");
+	scanf_s("%d %d", &a, &b);
+}
+
+int add(int a, int b)
+{						//break point
+	return a + b;
+}
+
+int main()
+{
+	int a, b, c;
+
+	Input(&a, &b); // F9 : break point
+	c = add(a, b);
+
+	printf("%d + %d = %d\n", a, b, c);
+
+	return 0;
+}
