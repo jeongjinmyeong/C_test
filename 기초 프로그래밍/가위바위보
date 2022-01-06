@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+
+#define M_END -1
+#define M_GA 0
+#define M_BA 1
+#define M_BO 2
+
+#define M_WIN 0
+#define M_LOSE 1 // M = my
+
+void M_lni(int* count, int* wcount)
+{
+	*count = 0;
+	*wcount = 0;
+	srand(time(NULL));
+} // 변수 초기화
+
+int ComPlay()
+{
+	return rand() % 3;
+} //컴퓨터로부터 숫자를 랜덤으로 받아옴
+
+int ManPlay()
+{
+	int you;
+
+	printf("-1(종료), 0(가위), 1(바위), 2(보) 중 무엇을 내시겠습니까? :  ");
+	scanf_s("%d", &you);
+
+	return you;
+} //가위 바위 보 중 한 가지를 입력 받음 (-1이면 종료)
+
+int M_Check(int com, int you)
+{
+	if (M_GA == you && M_BO == com)
+	{
+		return M_WIN;
+	}
+
+	if (M_BA == you && M_GA == com)
+	{
+		return M_WIN;
+	}
+
+	if (M_BO == you && M_BA == com)
+	{
+		return M_WIN;
+	}
+
+	return M_LOSE;
+}
+
+void ShowWRate(int count, int wcount)
+{
+	float wrate;
+
+	wrate = (float)wcount / count;
+	printf("Win Rate : %.2f\n", wrate);
+} //게임 종료 시 승률 나타내기
+
+int main(int argc, char* argv[])
+{
+	int you, com, re, count, wcount;
+	float wrate;
+
+	M_lni(&count, &wcount);
+
+	while (1)
+	{
+		com = ComPlay();
+		you = ManPlay();
+
+		if (M_END == you)
+		{
+			break;
+		}
+
+
+		count++;
+		re = M_Check(com, you);
+
+		if (M_WIN == re)
+		{
+			wcount++;
+			printf("You Win! c : %d / y : %d\n", com, you);
+		}
+
+		else
+		{
+			printf("You Lose! : c : %d / y : %d\n", com, you);
+		} //승부 결과 업데이트
+	}
+	ShowWRate(count, wcount);
+
+	return 0;
+}
